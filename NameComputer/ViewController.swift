@@ -41,12 +41,12 @@ class ViewController: NSViewController {
         self.username.stringValue = (self.username.stringValue.components(separatedBy: alphaCharSet) as NSArray).componentsJoined(by: "")
     }
     
-    // Display Message if Any Text Fields are Empty
+    // Message that the computer setup is complete
     func completeAlert() {
         
         let alert = NSAlert()
         alert.messageText = "Setup Complete"
-        alert.informativeText = "Setup is now complete!  Press CMD + Q to go to your Desktop."
+        alert.informativeText = "Setup is now complete!"
         alert.addButton(withTitle: "Ok")
         
         alert.beginSheetModal(for: self.view.window!, completionHandler: { (returnCode) -> Void in
@@ -93,7 +93,9 @@ class ViewController: NSViewController {
         // task.waitUntilExit()
         Start()
         completeAlert()
-        // closeWindow()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+            self.closeWindow()
+        })
     }
 }
 
