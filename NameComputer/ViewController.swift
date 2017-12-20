@@ -13,6 +13,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var assetTag: NSTextField!
     @IBOutlet weak var department: NSPopUpButton!
     @IBOutlet weak var username: NSTextField!
+    @IBOutlet weak var finishButton: NSButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,7 @@ class ViewController: NSViewController {
     }
     
     func Start() {
+        finishButton.isHidden = true
         let assetTagValue = self.assetTag.stringValue
         let usernameValue = self.username.stringValue
         let departmentValue = self.department.title
@@ -67,7 +69,7 @@ class ViewController: NSViewController {
         // let arguments = ["recon", "-assetTag", "\(assetTagValue)", "-endUsername", "\(fullNameValue)", "-department", "\(departmentValue)"]
         // let arguments = ["recon"]
         
-        NSAppleScript(source: "do shell script \"/usr/local/jamf/bin/jamf recon -assetTag \(assetTagValue) -endUsername \(usernameValue) -department \(departmentValue)\" with administrator " + "privileges")!.executeAndReturnError(nil)
+        NSAppleScript(source: "do shell script \"/usr/local/jamf/bin/jamf recon -assetTag \(assetTagValue) -endUsername \(usernameValue) -department \(departmentValue)\" with administrator privileges")!.executeAndReturnError(nil)
 
         let compPath = "/usr/sbin/scutil"
         let compArguments = ["--set", "ComputerName", "Beamly-\(assetTagValue)"]
@@ -80,9 +82,10 @@ class ViewController: NSViewController {
         hostTask.waitUntilExit()
         
         let localHostPath = "/usr/sbin/scutil"
-        let localHostArguments = ["--set", "HostName", "Beamly-\(assetTagValue)"]
+        let localHostArguments = ["--set", "LocalHostName", "Beamly-\(assetTagValue)"]
         let localHostTask = Process.launchedProcess(launchPath: localHostPath, arguments: localHostArguments)
         localHostTask.waitUntilExit()
+        
     }
     
     @IBAction func finishButton(_ sender: NSButton) {

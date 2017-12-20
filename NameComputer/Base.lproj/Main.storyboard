@@ -196,6 +196,7 @@
                     <connections>
                         <outlet property="assetTag" destination="9wj-fa-06a" id="Sdq-va-ohQ"/>
                         <outlet property="department" destination="e75-op-UzX" id="9TM-G7-Bg2"/>
+                        <outlet property="finishButton" destination="Sgv-Ig-PeI" id="3bQ-Uc-Jmk"/>
                         <outlet property="fullName" destination="6TS-0y-Id3" id="3Nf-CR-ouy"/>
                         <outlet property="username" destination="6TS-0y-Id3" id="Wd5-mR-VFR"/>
                     </connections>
