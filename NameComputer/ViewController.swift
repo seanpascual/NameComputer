@@ -32,6 +32,11 @@ class ViewController: NSViewController, NSTextFieldDelegate {
         
         self.assetTag.stringValue = (self.assetTag.stringValue.components(separatedBy: numberSet) as NSArray).componentsJoined(by: "")
         self.username.stringValue = (self.username.stringValue.components(separatedBy: alphaCharSet) as NSArray).componentsJoined(by: "")
+        
+        // Prevents typing of any characters beyond 4 digits
+        if self.assetTag.stringValue.count > 4 {
+            self.assetTag.stringValue = String(self.assetTag.stringValue.dropLast())
+        }
     }
     
     override var representedObject: Any? {
@@ -44,6 +49,7 @@ class ViewController: NSViewController, NSTextFieldDelegate {
     func closeWindow() {
         self.view.window?.close()
     }
+
     
     // Message that the computer setup is complete
     func completeAlert() {
