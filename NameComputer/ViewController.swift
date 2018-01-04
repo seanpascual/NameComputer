@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSTextFieldDelegate {
     
     @IBOutlet weak var assetTag: NSTextField!
     @IBOutlet weak var department: NSPopUpButton!
@@ -17,10 +17,23 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        assetTag.delegate = self
+        username.delegate = self
 
         // Do any additional setup after loading the view.
     }
 
+    // Checks the characters entered into textfields
+    override func controlTextDidChange(_ obj: Notification) {
+        
+        let numberSet: CharacterSet = CharacterSet(charactersIn: "0123456789").inverted
+        let alphaCharSet: CharacterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ.").inverted
+        
+        self.assetTag.stringValue = (self.assetTag.stringValue.components(separatedBy: numberSet) as NSArray).componentsJoined(by: "")
+        self.username.stringValue = (self.username.stringValue.components(separatedBy: alphaCharSet) as NSArray).componentsJoined(by: "")
+    }
+    
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
@@ -30,16 +43,6 @@ class ViewController: NSViewController {
     // Closes the Current Window
     func closeWindow() {
         self.view.window?.close()
-    }
-    
-    // Checks the characters entered into textfields
-    override func controlTextDidChange(_ obj: Notification) {
-        
-        let numberSet: CharacterSet = CharacterSet(charactersIn: "0123456789").inverted
-        let alphaCharSet: CharacterSet = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ.").inverted
-        
-        self.assetTag.stringValue = (self.assetTag.stringValue.components(separatedBy: numberSet) as NSArray).componentsJoined(by: "")
-        self.username.stringValue = (self.username.stringValue.components(separatedBy: alphaCharSet) as NSArray).componentsJoined(by: "")
     }
     
     // Message that the computer setup is complete
